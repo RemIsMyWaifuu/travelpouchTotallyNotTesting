@@ -49,7 +49,7 @@ jobs:
   build:
     name: Build Application
     runs-on: ubuntu-latest
-    needs: setup
+    needs: setup  # Ensure setup job completes first
 
     steps:
       - name: Checkout repository
@@ -64,7 +64,7 @@ jobs:
   check:
     name: Run Static Checks
     runs-on: ubuntu-latest
-    needs: setup
+    needs: build  # Ensure build job completes first
 
     steps:
       - name: Checkout repository
@@ -82,7 +82,7 @@ jobs:
   emulator_setup:
     name: Setup Android Emulator
     runs-on: ubuntu-latest
-    needs: setup
+    needs: check  # Ensure check job completes first
 
     steps:
       - name: AVD Cache
@@ -109,7 +109,7 @@ jobs:
   connected_tests:
     name: Run Connected Instrumentation Tests
     runs-on: ubuntu-latest
-    needs: [setup, emulator_setup]
+    needs: emulator_setup  # Ensure emulator setup job completes first
 
     steps:
       - name: Checkout repository
@@ -132,7 +132,7 @@ jobs:
   coverage:
     name: Generate and Upload Coverage Report
     runs-on: ubuntu-latest
-    needs: [build, check, connected_tests]
+    needs: [connected_tests]  # Ensure connected tests job completes first
 
     steps:
       - name: Checkout repository
