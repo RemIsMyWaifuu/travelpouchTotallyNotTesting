@@ -1,15 +1,3 @@
-name: CI - Test Runner
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
-
 jobs:
   unit_tests:
     name: Run Unit Tests
@@ -54,7 +42,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: unit-test-results
-          path: build/test-results/
+          path: |
+            app/build/test-results/
+            app/build/reports/
+            app/build/outputs/
 
   ui_tests:
     name: Run UI Tests
@@ -107,7 +98,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ui-test-results
-          path: build/androidTests/connected/
+          path: |
+            app/build/androidTests/connected/
+            app/build/reports/
+            app/build/outputs/
+            app/build/test-results/
 
   coverage:
     name: Generate and Upload Coverage Report
