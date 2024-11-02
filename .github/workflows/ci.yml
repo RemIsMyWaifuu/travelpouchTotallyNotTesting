@@ -147,13 +147,19 @@ jobs:
           java-version: "17"
           java-package: jdk
           
+      - name: Decode secrets for Google services
+        env:
+          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
+        run: |
+          echo "$GOOGLE_SERVICES" | base64 --decode > ./app/google-services.json
+          
       - name: Gradle cache
         uses: gradle/actions/setup-gradle@v3
     
 
       - name: Generate Jacoco Coverage Report
         run: ./gradlew jacocoTestReport
-
+    
       - name: Upload Coverage to SonarCloud
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
