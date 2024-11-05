@@ -45,12 +45,12 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            //isMinifyEnabled = true
+            //isShrinkResources = true
+            //proguardFiles(
+            //    getDefaultProguardFile("proguard-android-optimize.txt"),
+            //    "proguard-rules.pro"
+            //)
             // Only assign signing config if it exists
             if (keystoreFile != null && keystorePassword != null && keyAlias != null && keyPassword != null) {
                 println("creating a release config")
