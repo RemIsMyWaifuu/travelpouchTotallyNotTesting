@@ -112,15 +112,27 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: echo "Generated AVD snapshot for caching."
-      
+          
+      - name: Set execute permissions for gradlew
+        run: chmod +x ./gradlew
+        
       # This step runs gradle commands to build the application
       - name: Assemble
         run: |
           # To run the CI with debug information, add --info
           ./gradlew assemble lint --parallel --build-cache
-
-      - name: Set execute permissions for gradlew
-        run: chmod +x ./gradlew
+      
+      # Run connected tests on the emulator
+      - name: run tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: ./gradlew connectedCheck --parallel --build-cache  
 
       - name: Save UI Test Results
         if: success()  # Only save if the tests were successful
