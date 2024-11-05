@@ -17,10 +17,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -47,6 +47,7 @@ import com.github.se.travelpouch.model.Participant
 import com.github.se.travelpouch.model.Role
 import com.github.se.travelpouch.model.TravelContainer
 import com.github.se.travelpouch.model.location.LocationViewModel
+import com.github.se.travelpouch.model.profile.ProfileModelView
 import com.github.se.travelpouch.ui.navigation.NavigationActions
 import com.google.firebase.Timestamp
 
@@ -64,7 +65,8 @@ import com.google.firebase.Timestamp
 fun AddTravelScreen(
     listTravelViewModel: ListTravelViewModel = viewModel(factory = ListTravelViewModel.Factory),
     navigationActions: NavigationActions,
-    locationViewModel: LocationViewModel = viewModel(factory = LocationViewModel.Factory)
+    locationViewModel: LocationViewModel = viewModel(factory = LocationViewModel.Factory),
+    profileModelView: ProfileModelView
 ) {
   var title by remember { mutableStateOf("") }
   var description by remember { mutableStateOf("") }
@@ -170,7 +172,7 @@ fun AddTravelScreen(
                                 Modifier.padding(8.dp)
                                     .testTag("suggestion_${location.name}") // Tag each suggestion
                             )
-                        Divider() // Separate items with a divider
+                        HorizontalDivider() // Separate items with a divider
                       }
 
                       if (locationSuggestions.size > 3) {
@@ -237,7 +239,7 @@ fun AddTravelScreen(
                                 allAttachments = emptyMap(),
                                 allParticipants =
                                     mapOf(
-                                        Participant(fsUid = listTravelViewModel.getNewUid()) to
+                                        Participant(fsUid = profileModelView.profile.value.fsUid) to
                                             Role.OWNER))
 
                         Log.d("AddTravelScreen", "TravelContainer created successfully.")
