@@ -66,6 +66,19 @@ android {
         }
 
         debug {
+            // Only assign signing config if it exists
+            if (keystoreFile != null && keystorePassword != null && keyAlias != null && keyPassword != null) {
+                println("creating a debug config")
+                signingConfig = signingConfigs.create("debug") {
+                    storeFile(file(keystoreFile))
+                    storePassword(keystorePassword)
+                    keyAlias(keyAlias)
+                    keyPassword(keyPassword)
+                }
+            }
+            else {
+                println("No debug signing config set.")
+            }
             enableUnitTestCoverage = true
             enableAndroidTestCoverage = true
         }
