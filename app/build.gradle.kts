@@ -54,6 +54,7 @@ android {
             // Only assign signing config if it exists
             if (keystoreFile != null && keystorePassword != null && keyAlias != null && keyPassword != null) {
                 println("creating a release config")
+                chosenConfig = true // prevent debug signingConfig from getting created
                 signingConfig = signingConfigs.create("release") {
                     storeFile(file(keystoreFile))
                     storePassword(keystorePassword)
@@ -67,8 +68,7 @@ android {
         }
 
         debug {
-            // Only assign signing config if it exists
-            if (keystoreFile != null && keystorePassword != null && keyAlias != null && keyPassword != null) {
+            if (keystoreFile != null && keystorePassword != null && keyAlias != null && keyPassword != null && !chosenConfig) {
                 println("creating a debug config")
                 signingConfig = signingConfigs.create("debug") {
                     storeFile(file(keystoreFile))
