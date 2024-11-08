@@ -27,6 +27,7 @@ android {
     val keyAlias = System.getenv("KEY_ALIAS") ?: localProperties.getProperty("KEY_ALIAS")
     val keyPassword = System.getenv("KEY_PASSWORD") ?: localProperties.getProperty("KEY_PASSWORD")
     val mapsApiKey: String = System.getenv("MAPS_API_KEY") ?: (localProperties.getProperty("MAPS_API_KEY") ?: "")
+    var chosenConfig: Boolean = false // this is to avoid issues with the signing config when building apk
 
     defaultConfig {
         manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
