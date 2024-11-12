@@ -92,7 +92,7 @@ fun TravelListScreen(
           } else {
             Text(
                 modifier = Modifier.padding(pd).testTag("emptyTravelPrompt"),
-                text = "You have no travels yet.")
+                text = "You have no travels yet. :3")
           }
         }
       })
